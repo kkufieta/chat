@@ -26,17 +26,26 @@ class App extends Component {
     return false;
   };
 
+  addMessage(username, text) {
+    this.setState((prevState) => ({
+      messages: [...prevState.messages, { username: username, text: text }]
+    }))
+  }
+
   render() {
+    const { users, messages } = this.state;
     return (
       <div className='App'>
         <Header />
         <div className='container'>
           <ChatWindow
-            username={this.state.users[0].username}
-            messages={this.state.messages} />
+            username={users[0].username}
+            messages={messages}
+            addMessage={(text) => { this.addMessage(users[0].username, text) }} />
           <ChatWindow
-            username={this.state.users[1].username}
-            messages={this.state.messages} />
+            username={users[1].username}
+            messages={messages}
+            addMessage={(text) => { this.addMessage(users[1].username, text) }} />
         </div>
       </div>
     );

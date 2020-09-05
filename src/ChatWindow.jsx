@@ -2,9 +2,27 @@ import React from 'react';
 
 
 class ChatWindow extends React.Component {
+    state = {
+        message: ''
+    }
+
     isDisabled = () => {
         return false;
     };
+
+    handleOnSubmit = event => {
+        event.preventDefault();
+        this.props.addMessage(this.state.message);
+        this.setState({
+            message: ''
+        });
+    }
+
+    handleOnChange = event => {
+        this.setState({
+            message: event.target.value
+        })
+    }
 
     render() {
         const { username, messages } = this.props;
@@ -29,11 +47,13 @@ class ChatWindow extends React.Component {
                 </ul>
 
                 <div>
-                    <form className="input-group">
+                    <form className="input-group" onSubmit={this.handleOnSubmit}>
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Enter your message..." />
+                            placeholder="Enter your message..."
+                            value={this.state.message}
+                            onChange={this.handleOnChange} />
                         <div className='input-group-append'>
                             <button
                                 className='btn submit-button'
